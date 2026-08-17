@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <title>Settle up — SplitIt</title>
+  </head>
+  <body>
+    <div id="app-header"></div>
+
+    <main class="wrap">
+      <p class="eyebrow">Settlement</p>
+      <h1 style="font-size: 2rem">Clear your side of the ledger</h1>
+      <p class="muted">
+        Payments run against a sandbox gateway. Card numbers ending in 0000 are declined on purpose,
+        so you can see the failure path.
+      </p>
+
+      <div id="message"></div>
+
+      <div class="split" style="margin-top: 1.25rem">
+        <section>
+          <div class="toolbar">
+            <div>
+              <label for="group">Group</label>
+              <select id="group"></select>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>What you owe</h2>
+            <div id="transfers"></div>
+          </div>
+
+          <div class="section-head"><h2>Payment history</h2></div>
+          <div class="card table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Group</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Reference</th>
+                  <th>Status</th>
+                  <th style="text-align: right">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="history-rows"></tbody>
+            </table>
+            <div id="history-empty"></div>
+          </div>
+        </section>
+
+        <aside class="card">
+          <h2>Make a payment</h2>
+          <form id="pay">
+            <div class="field">
+              <label for="to">Paying</label>
+              <select id="to" name="to" required></select>
+            </div>
+            <div class="field">
+              <label for="amount">Amount</label>
+              <input id="amount" name="amount" type="number" step="0.01" min="0.01" required />
+            </div>
+            <div class="field">
+              <label for="method">Method</label>
+              <select id="method" name="method">
+                <option value="mock-card">Card (sandbox)</option>
+                <option value="bank-transfer">Bank transfer</option>
+                <option value="cash">Cash</option>
+              </select>
+            </div>
+            <div class="field" id="card-field">
+              <label for="cardNumber">Card number</label>
+              <input id="cardNumber" name="cardNumber" inputmode="numeric" value="4242 4242 4242 4242" />
+              <p class="small muted" style="margin: 0.35rem 0 0">
+                Try 4000 0000 0000 0000 to see a declined payment.
+              </p>
+            </div>
+            <button type="submit" id="pay-submit">Pay now</button>
+          </form>
+          <div id="pay-message" style="margin-top: 0.75rem"></div>
+        </aside>
+      </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/settle.js"></script>
+  </body>
+</html>

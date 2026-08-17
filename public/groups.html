@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <title>Groups — SplitIt</title>
+  </head>
+  <body>
+    <div id="app-header"></div>
+
+    <main class="wrap">
+      <p class="eyebrow">Groups</p>
+      <h1 style="font-size: 2rem">Every tab you are part of</h1>
+
+      <div id="message"></div>
+
+      <div class="split" style="margin-top: 1.25rem">
+        <section>
+          <form class="toolbar" id="filters">
+            <div>
+              <label for="q">Search</label>
+              <input id="q" name="q" type="search" placeholder="Name or description" />
+            </div>
+            <div>
+              <label for="category">Category</label>
+              <select id="category" name="category">
+                <option value="">All</option>
+                <option value="trip">Trip</option>
+                <option value="household">Household</option>
+                <option value="project">Project</option>
+                <option value="event">Event</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="archived">Status</label>
+              <select id="archived" name="archived">
+                <option value="false">Active</option>
+                <option value="true">Archived</option>
+              </select>
+            </div>
+            <button type="submit">Apply</button>
+            <button class="quiet" type="reset">Clear</button>
+          </form>
+
+          <div id="group-list"></div>
+        </section>
+
+        <aside class="card">
+          <h2>New group</h2>
+          <form id="new-group">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" required placeholder="Lisbon trip" />
+            </div>
+            <div class="field">
+              <label for="description">What is it for</label>
+              <textarea id="description" name="description" rows="2" placeholder="Flights, hostel, food"></textarea>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="new-category">Category</label>
+                <select id="new-category" name="category">
+                  <option value="trip">Trip</option>
+                  <option value="household">Household</option>
+                  <option value="project">Project</option>
+                  <option value="event">Event</option>
+                  <option value="other" selected>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="currency">Currency</label>
+                <select id="currency" name="currency">
+                  <option value="EUR">EUR</option>
+                  <option value="USD">USD</option>
+                  <option value="GBP">GBP</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="memberEmails">Member emails, comma separated</label>
+              <input id="memberEmails" name="memberEmails" placeholder="bea@example.com, tomas@example.com" />
+            </div>
+            <button type="submit">Create group</button>
+          </form>
+          <div id="new-group-message" style="margin-top: 0.75rem"></div>
+        </aside>
+      </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/groups.js"></script>
+  </body>
+</html>

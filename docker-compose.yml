@@ -1,0 +1,28 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      MONGODB_URI: mongodb://mongo:27017/splitit
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo-data:

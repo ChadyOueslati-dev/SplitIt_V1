@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SplitIt — settle shared expenses in the fewest payments</title>
+    <meta
+      name="description"
+      content="SplitIt tracks what a group spends, works out who owes whom, and settles the whole group with the smallest number of transfers."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/">Split<span>It</span></a>
+        <nav class="main">
+          <a href="#how">How it works</a>
+          <a href="#numbers">The maths</a>
+          <a class="btn ghost" href="/auth.html">Sign in</a>
+          <a class="btn" href="/auth.html?mode=register">Create account</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="wrap split">
+          <div>
+            <p class="eyebrow">Shared expenses / group settlement</p>
+            <h1>Four people, eleven receipts, two payments.</h1>
+            <p class="lede">
+              SplitIt keeps the running tab for a flat, a trip, or a project team. It nets every
+              expense down to a single position per person, then works out the shortest set of
+              transfers that clears the whole group.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" href="/auth.html?mode=register">Start a group</a>
+              <a class="btn ghost" href="/auth.html">Sign in</a>
+            </div>
+          </div>
+
+          <div class="demo-ledger" id="demo">
+            <p class="eyebrow" style="margin-bottom: 0.5rem">Berlin trip / live example</p>
+            <div id="demo-beams"></div>
+            <p class="small muted" style="margin: 0.9rem 0 0.35rem">Settles with</p>
+            <div id="demo-transfers" class="small"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap" id="how">
+        <div class="section-head">
+          <h2>How a group gets settled</h2>
+        </div>
+        <div class="grid cols-4">
+          <div class="step">
+            <p class="n">Step 01</p>
+            <h3>Start a group</h3>
+            <p class="small muted">
+              Name it, pick a currency, add the people by email. A flatshare, a road trip, a club
+              committee.
+            </p>
+          </div>
+          <div class="step">
+            <p class="n">Step 02</p>
+            <h3>Log what you spend</h3>
+            <p class="small muted">
+              Who paid, how much, who it covers. Split evenly, by exact amounts, or by weighted
+              shares.
+            </p>
+          </div>
+          <div class="step">
+            <p class="n">Step 03</p>
+            <h3>Read the balance</h3>
+            <p class="small muted">
+              Every member gets one number: what the group owes them, or what they owe the group.
+            </p>
+          </div>
+          <div class="step">
+            <p class="n">Step 04</p>
+            <h3>Pay it off</h3>
+            <p class="small muted">
+              SplitIt names the exact transfers. Run them through the sandbox gateway and the ledger
+              updates.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap" id="numbers">
+        <div class="section-head">
+          <h2>Why the transfer count drops</h2>
+        </div>
+        <div class="grid cols-2">
+          <div class="card">
+            <p>
+              A group of six people who each owe each other something can end up with fifteen
+              separate IOUs. SplitIt does not track pairs. It tracks one net position per person,
+              then matches the biggest debtor to the biggest creditor until everyone sits at zero.
+            </p>
+            <p class="small muted">
+              That takes at most five payments for six people, instead of fifteen. The rule for a
+              group of n is n-1 transfers at worst, against n(n-1)/2 pairwise ones.
+            </p>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Group size</th>
+                  <th>Pairwise IOUs</th>
+                  <th>SplitIt transfers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>3</td><td class="money">3</td><td class="money credit">2</td></tr>
+                <tr><td>4</td><td class="money">6</td><td class="money credit">3</td></tr>
+                <tr><td>6</td><td class="money">15</td><td class="money credit">5</td></tr>
+                <tr><td>10</td><td class="money">45</td><td class="money credit">9</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        SplitIt — B198c17 App &amp; Web Development Studio, Gisma University of Applied Sciences.
+        Payments run against a mock sandbox gateway; no real money moves.
+      </div>
+    </footer>
+
+    <script src="/js/ui.js"></script>
+    <script src="/js/landing.js"></script>
+  </body>
+</html>

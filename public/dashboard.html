@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <title>Dashboard — SplitIt</title>
+  </head>
+  <body>
+    <div id="app-header"></div>
+
+    <main class="wrap">
+      <p class="eyebrow">Your position</p>
+      <h1 style="font-size: 2rem">Where you stand right now</h1>
+
+      <div id="message"></div>
+
+      <div class="grid cols-4" style="margin-top: 1.25rem">
+        <div class="stat"><p class="label">You owe</p><p class="value debit" id="s-owe">—</p></div>
+        <div class="stat"><p class="label">Owed to you</p><p class="value credit" id="s-owed">—</p></div>
+        <div class="stat"><p class="label">Active groups</p><p class="value" id="s-groups">—</p></div>
+        <div class="stat"><p class="label">Expenses logged</p><p class="value" id="s-expenses">—</p></div>
+      </div>
+
+      <div class="split" style="margin-top: 1.5rem">
+        <section class="card">
+          <div class="section-head" style="margin-top: 0">
+            <h2>Groups</h2>
+            <a class="btn ghost" href="/groups.html">Manage groups</a>
+          </div>
+          <div id="group-list"></div>
+        </section>
+
+        <section class="card">
+          <h2>Latest activity</h2>
+          <div id="recent"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/dashboard.js"></script>
+  </body>
+</html>

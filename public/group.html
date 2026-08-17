@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <title>Group — SplitIt</title>
+  </head>
+  <body>
+    <div id="app-header"></div>
+
+    <main class="wrap">
+      <p class="eyebrow" id="group-category">Group</p>
+      <h1 style="font-size: 2rem" id="group-name">Loading</h1>
+      <p class="muted" id="group-description"></p>
+
+      <div id="message"></div>
+
+      <div class="grid cols-3" style="margin: 1.25rem 0">
+        <div class="stat"><p class="label">Total spent</p><p class="value" id="s-total">—</p></div>
+        <div class="stat"><p class="label">Your position</p><p class="value" id="s-yours">—</p></div>
+        <div class="stat"><p class="label">Members</p><p class="value" id="s-members">—</p></div>
+      </div>
+
+      <div class="split">
+        <section>
+          <div class="section-head" style="margin-top: 0">
+            <h2>Expenses</h2>
+            <span class="small muted" id="expense-count"></span>
+          </div>
+
+          <form class="toolbar" id="filters">
+            <div>
+              <label for="q">Search</label>
+              <input id="q" name="q" type="search" placeholder="Description or note" />
+            </div>
+            <div>
+              <label for="category">Category</label>
+              <select id="category" name="category">
+                <option value="">All</option>
+                <option value="food">Food</option>
+                <option value="transport">Transport</option>
+                <option value="accommodation">Accommodation</option>
+                <option value="utilities">Utilities</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="paidBy">Paid by</label>
+              <select id="paidBy" name="paidBy"><option value="">Anyone</option></select>
+            </div>
+            <div>
+              <label for="min">Min amount</label>
+              <input id="min" name="min" type="number" step="0.01" min="0" />
+            </div>
+            <div>
+              <label for="max">Max amount</label>
+              <input id="max" name="max" type="number" step="0.01" min="0" />
+            </div>
+            <button type="submit">Filter</button>
+            <button class="quiet" type="reset">Clear</button>
+          </form>
+
+          <div class="card table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Paid by</th>
+                  <th>Your share</th>
+                  <th style="text-align: right">Amount</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="expense-rows"></tbody>
+            </table>
+            <div id="expense-empty"></div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem; align-items: center">
+              <button class="quiet" id="prev" type="button">Previous</button>
+              <span class="small muted" id="page-label"></span>
+              <button class="quiet" id="next" type="button">Next</button>
+            </div>
+          </div>
+        </section>
+
+        <aside>
+          <div class="card">
+            <h2>Balances</h2>
+            <div id="beams"></div>
+            <p class="small muted" style="margin-top: 0.75rem">
+              Left of the line means that person owes the group. Right means the group owes them.
+            </p>
+          </div>
+
+          <div class="card" style="margin-top: 1rem">
+            <h2>Suggested transfers</h2>
+            <div id="transfers"></div>
+            <a class="btn" href="/settle.html" style="margin-top: 0.75rem">Settle up</a>
+          </div>
+
+          <div class="card" style="margin-top: 1rem">
+            <h2>Add an expense</h2>
+            <form id="new-expense">
+              <div class="field">
+                <label for="description">Description</label>
+                <input id="description" name="description" required placeholder="Groceries" />
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="amount">Amount</label>
+                  <input id="amount" name="amount" type="number" step="0.01" min="0.01" required />
+                </div>
+                <div class="field">
+                  <label for="new-category">Category</label>
+                  <select id="new-category" name="category">
+                    <option value="food">Food</option>
+                    <option value="transport">Transport</option>
+                    <option value="accommodation">Accommodation</option>
+                    <option value="utilities">Utilities</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="other" selected>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="new-paidBy">Paid by</label>
+                  <select id="new-paidBy" name="paidBy"></select>
+                </div>
+                <div class="field">
+                  <label for="spentAt">Date</label>
+                  <input id="spentAt" name="spentAt" type="date" />
+                </div>
+              </div>
+              <div class="field">
+                <label>Split between</label>
+                <div class="check-list" id="participants"></div>
+              </div>
+              <div class="field">
+                <label for="note">Note</label>
+                <input id="note" name="note" placeholder="Optional" />
+              </div>
+              <button type="submit">Add expense</button>
+            </form>
+            <div id="new-expense-message" style="margin-top: 0.75rem"></div>
+          </div>
+
+          <div class="card" style="margin-top: 1rem">
+            <h2>Add a member</h2>
+            <form id="add-member" class="toolbar" style="margin: 0">
+              <div>
+                <label for="member-email">Their email</label>
+                <input id="member-email" type="email" required placeholder="name@example.com" />
+              </div>
+              <button type="submit">Add</button>
+            </form>
+            <div id="member-message" style="margin-top: 0.5rem"></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/group.js"></script>
+  </body>
+</html>

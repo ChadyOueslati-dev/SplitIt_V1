@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <title>Activity — SplitIt</title>
+  </head>
+  <body>
+    <div id="app-header"></div>
+
+    <main class="wrap">
+      <p class="eyebrow">Audit trail</p>
+      <h1 style="font-size: 2rem">Everything that happened, in order</h1>
+
+      <div id="message"></div>
+
+      <form class="toolbar" id="filters" style="margin-top: 1.25rem">
+        <div>
+          <label for="group">Group</label>
+          <select id="group" name="groupId"><option value="">All groups</option></select>
+        </div>
+        <div>
+          <label for="action">Event type</label>
+          <select id="action" name="action">
+            <option value="">Everything</option>
+            <option value="group.created">Group created</option>
+            <option value="group.member_added">Member added</option>
+            <option value="group.updated">Group updated</option>
+            <option value="expense.created">Expense added</option>
+            <option value="expense.updated">Expense edited</option>
+            <option value="expense.deleted">Expense deleted</option>
+            <option value="settlement.initiated">Payment started</option>
+            <option value="settlement.completed">Payment completed</option>
+            <option value="settlement.failed">Payment failed</option>
+          </select>
+        </div>
+        <button type="submit">Filter</button>
+        <button class="quiet" type="reset">Clear</button>
+      </form>
+
+      <div class="card">
+        <div id="entries"></div>
+        <div style="display: flex; gap: 0.5rem; margin-top: 1rem; align-items: center">
+          <button class="quiet" id="prev" type="button">Previous</button>
+          <span class="small muted" id="page-label"></span>
+          <button class="quiet" id="next" type="button">Next</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/activity.js"></script>
+  </body>
+</html>
