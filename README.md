@@ -1,10 +1,10 @@
 # SplitIt
 
 Shared expense tracking and group settlement. A group logs what it spends, SplitIt nets every
-expense down to one position per person, then works out the shortest set of transfers that clears
+expense down to one position per person, then works out the shortest set of transfers that ears
 the whole group. Payments run through a mock sandbox gateway.
 
-Built for B198c17 App & Web Development Studio, Gisma University of Applied Sciences.
+Built for B198c17 App & Web Development Studio, Gisma University of Applied Sciences @BY: Chady Oueslati GH1026563  .
 
 Stack: HTML, CSS and vanilla JavaScript on the front end. Node.js, Express and MongoDB with
 Mongoose on the back end. JWT sessions in an HttpOnly cookie. Docker and Docker Compose for
