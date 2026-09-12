@@ -18,7 +18,7 @@ const listActivity = asyncHandler(async (req, res) => {
 
   const [entries, total] = await Promise.all([
     Activity.find(filter)
-      .populate('actor', 'name')
+      .populate('actor', 'name avatar')
       .populate('group', 'name')
       .sort({ createdAt: -1 })
       .skip(skip)
@@ -41,7 +41,7 @@ const dashboard = asyncHandler(async (req, res) => {
     Expense.find({ group: { $in: groupIds } }),
     Settlement.find({ group: { $in: groupIds } }),
     Activity.find({ group: { $in: groupIds } })
-      .populate('actor', 'name')
+      .populate('actor', 'name avatar')
       .populate('group', 'name')
       .sort({ createdAt: -1 })
       .limit(8)

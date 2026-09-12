@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="/js/theme-init.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <title>Join a group — SplitIt</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/">Split<span>It</span></a>
+      </div>
+    </header>
+
+    <main class="wrap" style="max-width: 460px">
+      <p class="eyebrow">No account needed</p>
+      <h1 style="font-size: 2rem">Join with a group code</h1>
+      <p class="muted">
+        Ask whoever runs the group for their code. An owner has to let you in, so you may not see
+        the group straight away.
+      </p>
+
+      <div id="join-message"></div>
+
+      <form class="card" id="join-form">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="code">Group code</label>
+          <input
+            id="code"
+            name="code"
+            type="text"
+            required
+            autocomplete="off"
+            maxlength="10"
+            style="text-transform: uppercase"
+          />
+        </div>
+        <div class="field">
+          <label for="message">Message to the owner (optional)</label>
+          <input id="message" name="message" placeholder="It's Bea, from the trip chat" maxlength="200" />
+        </div>
+        <button id="join-submit" type="submit">Ask to join</button>
+      </form>
+
+      <p class="small muted" style="margin-top: 1rem">
+        Already have an account? <a href="/auth.html">Sign in</a> instead.
+      </p>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/join.js"></script>
+  </body>
+</html>

@@ -41,7 +41,7 @@
             return `
         <div class="entry">
           <div style="flex:1">
-            <a href="/group.html?id=${g._id}"><strong>${UI.escape(g.name)}</strong></a>
+            <a href="/group.html?id=${g._id}" class="avatar-row" style="display:inline-flex">${UI.groupBadgeHtml(g, 22)}<strong>${UI.escape(g.name)}</strong></a>
             <div class="small muted">${g.members.length} members · ${g.expenseCount} expenses · ${UI.escape(g.category)}</div>
           </div>
           <div style="text-align:right">

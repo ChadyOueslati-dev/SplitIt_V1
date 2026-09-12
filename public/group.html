@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script src="/js/theme-init.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,7 +18,10 @@
 
     <main class="wrap">
       <p class="eyebrow" id="group-category">Group</p>
-      <h1 style="font-size: 2rem" id="group-name">Loading</h1>
+      <h1 style="font-size: 2rem" class="avatar-row">
+        <span id="group-badge"></span>
+        <span id="group-name">Loading</span>
+      </h1>
       <p class="muted" id="group-description"></p>
 
       <div id="message"></div>
@@ -32,7 +36,10 @@
         <section>
           <div class="section-head" style="margin-top: 0">
             <h2>Expenses</h2>
-            <span class="small muted" id="expense-count"></span>
+            <span style="display: flex; align-items: center; gap: 0.75rem">
+              <span class="small muted" id="expense-count"></span>
+              <button class="quiet" id="export-csv" type="button">Export CSV</button>
+            </span>
           </div>
 
           <form class="toolbar" id="filters">
@@ -163,6 +170,87 @@
               <button type="submit">Add</button>
             </form>
             <div id="member-message" style="margin-top: 0.5rem"></div>
+          </div>
+
+          <div class="card" style="margin-top: 1rem">
+            <h2>Group photo</h2>
+            <div class="avatar-row" style="gap: 1.25rem">
+              <span id="group-photo-preview"></span>
+              <div>
+                <div class="avatar-row">
+                  <label class="btn ghost" for="group-photo-file" style="margin: 0">Upload a photo</label>
+                  <button class="quiet" id="group-photo-remove" type="button" hidden>Remove</button>
+                </div>
+                <input id="group-photo-file" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+              </div>
+            </div>
+            <div id="group-photo-message" style="margin-top: 0.5rem"></div>
+          </div>
+
+          <div class="card" style="margin-top: 1rem">
+            <h2>Edit group</h2>
+            <form id="edit-group">
+              <div class="field">
+                <label for="edit-name">Name</label>
+                <input id="edit-name" name="name" required />
+              </div>
+              <div class="field">
+                <label for="edit-description">Description</label>
+                <input id="edit-description" name="description" placeholder="Optional" />
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="edit-category">Category</label>
+                  <select id="edit-category" name="category">
+                    <option value="trip">Trip</option>
+                    <option value="household">Household</option>
+                    <option value="event">Event</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="edit-currency">Currency</label>
+                  <input id="edit-currency" name="currency" maxlength="3" style="text-transform: uppercase" />
+                </div>
+              </div>
+              <div class="field">
+                <label>Icon</label>
+                <div class="icon-picker" id="edit-icon-picker">
+                  <button type="button" data-icon="🧳">🧳</button>
+                  <button type="button" data-icon="🏠">🏠</button>
+                  <button type="button" data-icon="💼">💼</button>
+                  <button type="button" data-icon="🎉">🎉</button>
+                  <button type="button" data-icon="🍕">🍕</button>
+                  <button type="button" data-icon="✈️">✈️</button>
+                  <button type="button" data-icon="🎓">🎓</button>
+                  <button type="button" data-icon="⚽">⚽</button>
+                </div>
+                <input id="edit-icon" name="icon" maxlength="8" />
+              </div>
+              <button type="submit">Save changes</button>
+            </form>
+            <div id="edit-group-message" style="margin-top: 0.75rem"></div>
+          </div>
+
+          <div class="card" style="margin-top: 1rem">
+            <h2>Join code</h2>
+            <p class="small muted">
+              Anyone with this code can ask to join at <span id="join-url"></span> — no account
+              needed. You still have to approve them.
+            </p>
+            <div class="toolbar" style="margin: 0">
+              <div style="flex: 1">
+                <code id="join-code" class="tag" style="font-size: 1rem; padding: 0.35rem 0.6rem"></code>
+              </div>
+              <button class="quiet" id="copy-code" type="button">Copy</button>
+              <button class="quiet" id="regenerate-code" type="button" hidden>New code</button>
+            </div>
+            <div id="join-code-message" style="margin-top: 0.5rem"></div>
+          </div>
+
+          <div class="card" id="join-requests-card" style="margin-top: 1rem" hidden>
+            <h2>Pending requests</h2>
+            <div id="join-requests"></div>
           </div>
         </aside>
       </div>

@@ -3,6 +3,7 @@ const Activity = require('../models/Activity');
 const { asyncHandler, httpError } = require('../middleware/error');
 const { loadGroupForUser } = require('./groupController');
 const { toCents, splitEqually, splitByWeight } = require('../services/money');
+const { toCsv } = require('../services/csv');
 
 /** Even split across the chosen participants, or the whole group if none were chosen. */
 function buildEqualShares({ amountCents, participants, memberIds }) {
@@ -11,11 +12,10 @@ function buildEqualShares({ amountCents, participants, memberIds }) {
   return ids.map((user, i) => ({ user, amountCents: parts[i], weight: 1 }));
 }
 
-const listExpenses = asyncHandler(async (req, res) => {
-  const group = await loadGroupForUser(req.params.groupId, req.user._id);
-  const { q = '', category, paidBy, from, to, min, max, sort = '-spentAt', page = 1, limit = 20 } = req.query;
-
-  const filter = { group: group._id };
+/** The same text/category/payer/amount/date filters back both the paginated list and the
+ *  CSV export, so what you export always matches what you were just looking at. */
+function buildExpenseFilter(groupId, { q = '', category, paidBy, from, to, min, max } = {}) {
+  const filter = { group: groupId };
   if (category) filter.category = category;
   if (paidBy) filter.paidBy = paidBy;
   if (q.trim()) {
@@ -31,13 +31,20 @@ const listExpenses = asyncHandler(async (req, res) => {
     if (min) filter.amountCents.$gte = toCents(min);
     if (max) filter.amountCents.$lte = toCents(max);
   }
+  return filter;
+}
+
+const listExpenses = asyncHandler(async (req, res) => {
+  const group = await loadGroupForUser(req.params.groupId, req.user._id);
+  const { sort = '-spentAt', page = 1, limit = 20 } = req.query;
+  const filter = buildExpenseFilter(group._id, req.query);
 
   const perPage = Math.min(Number(limit) || 20, 100);
   const skip = (Math.max(Number(page), 1) - 1) * perPage;
 
   const [expenses, total] = await Promise.all([
     Expense.find(filter)
-      .populate('paidBy', 'name email')
+      .populate('paidBy', 'name email avatar')
       .populate('shares.user', 'name email')
       .sort(sort)
       .skip(skip)
@@ -173,6 +180,36 @@ const deleteExpense = asyncHandler(async (req, res) => {
   res.json({ ok: true });
 });
 
+/** The filtered expense list as a CSV download — one row per expense, with a
+ *  semicolon-separated breakdown of who owed what so the file stands on its own. */
+const exportExpenses = asyncHandler(async (req, res) => {
+  const group = await loadGroupForUser(req.params.groupId, req.user._id);
+  const { sort = '-spentAt' } = req.query;
+  const filter = buildExpenseFilter(group._id, req.query);
+
+  const expenses = await Expense.find(filter)
+    .populate('paidBy', 'name')
+    .populate('shares.user', 'name')
+    .sort(sort);
+
+  const headers = ['Date', 'Description', 'Category', 'Paid by', 'Amount', 'Currency', 'Note', 'Shares'];
+  const rows = expenses.map((e) => [
+    e.spentAt.toISOString().slice(0, 10),
+    e.description,
+    e.category,
+    e.paidBy.name,
+    (e.amountCents / 100).toFixed(2),
+    e.currency,
+    e.note,
+    e.shares.map((s) => `${s.user.name}: ${(s.amountCents / 100).toFixed(2)}`).join('; ')
+  ]);
+
+  const filename = `${group.name.replace(/[^a-z0-9]+/gi, '-').toLowerCase() || 'group'}-expenses.csv`;
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  res.send(toCsv(rows, headers));
+});
+
 /** Category totals for the dashboard chart. */
 const categoryBreakdown = asyncHandler(async (req, res) => {
   const group = await loadGroupForUser(req.params.groupId, req.user._id);
@@ -190,5 +227,6 @@ module.exports = {
   getExpense,
   updateExpense,
   deleteExpense,
+  exportExpenses,
   categoryBreakdown
 };

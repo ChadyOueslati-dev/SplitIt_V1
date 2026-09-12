@@ -59,16 +59,20 @@ async function seed() {
     name: 'Lisbon trip',
     description: 'Four days in April. Flights, hostel, food, transport.',
     category: 'trip',
+    icon: Group.CATEGORY_ICONS.trip,
     currency: 'EUR',
-    members: users.map((u, i) => ({ user: u._id, role: i === 0 ? 'owner' : 'member' }))
+    members: users.map((u, i) => ({ user: u._id, role: i === 0 ? 'owner' : 'member' })),
+    joinCode: await Group.createUniqueJoinCode()
   });
 
   const flat = await Group.create({
     name: 'Flat 4B',
     description: 'Shared bills for the flat.',
     category: 'household',
+    icon: Group.CATEGORY_ICONS.household,
     currency: 'EUR',
-    members: users.slice(0, 3).map((u, i) => ({ user: u._id, role: i === 0 ? 'owner' : 'member' }))
+    members: users.slice(0, 3).map((u, i) => ({ user: u._id, role: i === 0 ? 'owner' : 'member' })),
+    joinCode: await Group.createUniqueJoinCode()
   });
 
   async function addExpenses(group, rows, members) {

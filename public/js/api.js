@@ -36,7 +36,8 @@ const API = {
   get: (p, params) => API.request(p, { params }),
   post: (p, body) => API.request(p, { method: 'POST', body }),
   patch: (p, body) => API.request(p, { method: 'PATCH', body }),
-  del: (p) => API.request(p, { method: 'DELETE' })
+  put: (p, body) => API.request(p, { method: 'PUT', body }),
+  del: (p, body) => API.request(p, { method: 'DELETE', body })
 };
 
 window.API = API;

@@ -29,6 +29,11 @@ app.use(
   })
 );
 
+// Avatars and group photos are small base64 images sent as JSON, well over the 100kb the
+// rest of the API needs — scoped to just these routes so the general limit stays tight
+// everywhere else.
+app.use('/api/auth/avatar', express.json({ limit: '1mb' }));
+app.use('/api/groups/:id/photo', express.json({ limit: '1mb' }));
 app.use(express.json({ limit: '100kb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="/js/theme-init.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <title>Reset password — SplitIt</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/">Split<span>It</span></a>
+      </div>
+    </header>
+
+    <main class="wrap" style="max-width: 460px">
+      <p class="eyebrow">Account</p>
+      <h1 style="font-size: 2rem">Reset your password</h1>
+      <p class="muted" id="step-blurb">Enter the email on your account and we'll send you a code.</p>
+
+      <div id="reset-message"></div>
+
+      <form class="card" id="request-form">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <button id="request-submit" type="submit">Send code</button>
+      </form>
+
+      <form class="card" id="confirm-form" hidden>
+        <div class="field">
+          <label for="code">6-digit code</label>
+          <input
+            id="code"
+            name="code"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]{6}"
+            maxlength="6"
+            required
+            autocomplete="one-time-code"
+          />
+        </div>
+        <div class="field">
+          <label for="password">New password</label>
+          <input id="password" name="password" type="password" required minlength="8" autocomplete="new-password" />
+        </div>
+        <button id="confirm-submit" type="submit">Set new password</button>
+        <button class="quiet" id="use-different-email" type="button" style="margin-left: 0.5rem">
+          Use a different email
+        </button>
+      </form>
+
+      <p class="small muted" style="margin-top: 1rem">
+        <a href="/auth.html">Back to sign in</a>
+      </p>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/reset.js"></script>
+  </body>
+</html>

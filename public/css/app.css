@@ -6,6 +6,7 @@
 :root {
   --paper: #eaedef;
   --card: #f7f8f9;
+  --field-bg: #ffffff;
   --ink: #131c22;
   --ink-soft: #5b6a73;
   --rule: #c9d0d5;
@@ -24,8 +25,49 @@
   --mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
 }
 
+/* Dark theme: same tokens, different values, so every component below stays untouched.
+   Applies automatically by OS preference, or explicitly via a data-theme attribute set
+   by the toggle in the nav (see ui.js) and persisted in localStorage. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #14181b;
+    --card: #1c2226;
+    --field-bg: #22292d;
+    --ink: #eef1f2;
+    --ink-soft: #97a3aa;
+    --rule: #333c41;
+    --action: #6c7dff;
+    --action-dark: #8a99ff;
+    --credit: #3fbf96;
+    --debit: #e0725a;
+    --warn: #d1a53d;
+  }
+}
+
+:root[data-theme='dark'] {
+  --paper: #14181b;
+  --card: #1c2226;
+  --field-bg: #22292d;
+  --ink: #eef1f2;
+  --ink-soft: #97a3aa;
+  --rule: #333c41;
+  --action: #6c7dff;
+  --action-dark: #8a99ff;
+  --credit: #3fbf96;
+  --debit: #e0725a;
+  --warn: #d1a53d;
+}
+
 * {
   box-sizing: border-box;
+}
+
+/* An author stylesheet's normal-weight rules always win over the browser's built-in
+   [hidden] { display: none } rule, regardless of selector specificity — origin beats
+   specificity in the cascade. Since button/.btn below sets display: inline-block on
+   every button, a plain `hidden` attribute would otherwise never actually hide one. */
+[hidden] {
+  display: none !important;
 }
 
 html {
@@ -385,7 +427,7 @@ textarea {
   padding: 0.55rem 0.65rem;
   border: 1px solid var(--rule);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--field-bg);
   color: var(--ink);
   font-family: var(--body);
   font-size: 0.95rem;
@@ -427,7 +469,7 @@ a:focus-visible {
   color: var(--ink);
   font-size: 0.85rem;
   cursor: pointer;
-  background: #fff;
+  background: var(--field-bg);
 }
 
 .check-list input {
@@ -588,4 +630,218 @@ footer {
     transition: none !important;
     animation: none !important;
   }
+}
+
+/* ---------- Avatars ---------- */
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: 0 0 auto;
+  font-family: var(--display);
+  font-weight: 700;
+  color: #fff;
+  vertical-align: middle;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+/* ---------- Theme toggle ---------- */
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+  border-radius: var(--radius);
+  padding: 0.3rem 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+
+/* ---------- Group icon ---------- */
+
+.group-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  margin-right: 0.35rem;
+}
+
+.icon-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.icon-picker button {
+  background: var(--field-bg);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-size: 1.1rem;
+  padding: 0.3rem 0.5rem;
+  line-height: 1;
+}
+
+.icon-picker button:hover {
+  border-color: var(--action);
+}
+
+/* ---------- Icon buttons (bell, sign out) ---------- */
+
+.icon-btn {
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+  border-radius: var(--radius);
+  padding: 0.4rem;
+  line-height: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Notifications ---------- */
+
+.notif-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 999px;
+  background: var(--debit);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  line-height: 16px;
+  text-align: center;
+}
+
+.notif-panel {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  width: 340px;
+  max-width: calc(100vw - 2rem);
+  max-height: 420px;
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  z-index: 40;
+}
+
+.notif-panel-head {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.notif-item {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px dotted var(--rule);
+  font-size: 0.85rem;
+}
+
+.notif-item:last-child {
+  border-bottom: 0;
+}
+
+.notif-item .notif-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-item time {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- Modal ---------- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 17, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  max-width: 360px;
+  width: 100%;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+  justify-content: flex-end;
+}
+
+/* ---------- Confetti ---------- */
+
+.confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
 }

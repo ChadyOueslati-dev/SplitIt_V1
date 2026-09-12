@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script src="/js/theme-init.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -50,6 +51,13 @@
         <button id="auth-submit" type="submit">Sign in</button>
         <button class="quiet" id="auth-toggle" type="button" style="margin-left: 0.5rem"></button>
       </form>
+
+      <p class="small muted" style="margin-top: 1rem" id="forgot-link">
+        Forgot your password? <a href="/reset.html">Reset it</a>.
+      </p>
+      <p class="small muted">
+        Just have a group code? <a href="/join.html">Join without an account</a>.
+      </p>
     </main>
 
     <script src="/js/api.js"></script>

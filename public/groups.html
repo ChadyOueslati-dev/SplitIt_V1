@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script src="/js/theme-init.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -83,6 +84,20 @@
                   <option value="GBP">GBP</option>
                 </select>
               </div>
+            </div>
+            <div class="field">
+              <label for="icon">Icon</label>
+              <div class="icon-picker" id="icon-picker">
+                <button type="button" data-icon="🧳">🧳</button>
+                <button type="button" data-icon="🏠">🏠</button>
+                <button type="button" data-icon="💼">💼</button>
+                <button type="button" data-icon="🎉">🎉</button>
+                <button type="button" data-icon="🍕">🍕</button>
+                <button type="button" data-icon="✈️">✈️</button>
+                <button type="button" data-icon="🎓">🎓</button>
+                <button type="button" data-icon="⚽">⚽</button>
+              </div>
+              <input id="icon" name="icon" maxlength="4" placeholder="Leave blank to match the category" />
             </div>
             <div class="field">
               <label for="memberEmails">Member emails, comma separated</label>

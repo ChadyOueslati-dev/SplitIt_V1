@@ -9,6 +9,7 @@ const title = document.getElementById('auth-title');
 const blurb = document.getElementById('auth-blurb');
 const toggle = document.getElementById('auth-toggle');
 const submit = document.getElementById('auth-submit');
+const forgotLink = document.getElementById('forgot-link');
 
 function paint() {
   const registering = mode === 'register';
@@ -19,6 +20,7 @@ function paint() {
   nameField.hidden = !registering;
   submit.textContent = registering ? 'Create account' : 'Sign in';
   toggle.textContent = registering ? 'Already have an account? Sign in' : 'New here? Create an account';
+  forgotLink.hidden = registering;
 }
 
 toggle.addEventListener('click', () => {

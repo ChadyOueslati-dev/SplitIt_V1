@@ -18,12 +18,19 @@
         ? groups
             .map((g) => {
               const cls = g.yourBalanceCents < 0 ? 'debit' : g.yourBalanceCents > 0 ? 'credit' : 'muted';
-              const members = g.members.map((m) => UI.escape(m.user.name)).join(', ');
+              const avatars = g.members
+                .map(
+                  (m) =>
+                    `<span class="avatar-chip" title="${UI.escape(m.user.name)}">${UI.avatarHtml(m.user, 22)}</span>`
+                )
+                .join('');
               return `
         <article class="card" style="margin-bottom:0.75rem">
           <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
             <div>
-              <h3 style="margin-bottom:0.2rem"><a href="/group.html?id=${g._id}">${UI.escape(g.name)}</a></h3>
+              <h3 style="margin-bottom:0.2rem">
+                <a href="/group.html?id=${g._id}" class="avatar-row" style="display:inline-flex">${UI.groupBadgeHtml(g, 26)}${UI.escape(g.name)}</a>
+              </h3>
               <span class="tag">${UI.escape(g.category)}</span>
               <span class="tag">${UI.escape(g.currency)}</span>
               ${g.archived ? '<span class="tag wait">archived</span>' : ''}
@@ -34,7 +41,7 @@
             </div>
           </div>
           <p class="small muted" style="margin:0.5rem 0 0">${UI.escape(g.description || 'No description')}</p>
-          <p class="small muted" style="margin:0.25rem 0 0">Members: ${members}</p>
+          <div class="avatar-row" style="margin-top:0.4rem">${avatars}</div>
           <div style="margin-top:0.75rem;display:flex;gap:0.5rem">
             <a class="btn ghost" href="/group.html?id=${g._id}">Open</a>
             <button class="quiet" data-archive="${g._id}" data-state="${g.archived}">
@@ -63,6 +70,12 @@
   });
   filters.addEventListener('reset', () => setTimeout(load, 0));
 
+  document.querySelectorAll('#icon-picker [data-icon]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.getElementById('icon').value = btn.dataset.icon;
+    });
+  });
+
   const form = document.getElementById('new-group');
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -76,6 +89,7 @@
         name: form.elements.name.value.trim(),
         description: form.elements.description.value.trim(),
         category: form.elements.category.value,
+        icon: form.elements.icon.value.trim(),
         currency: form.elements.currency.value,
         memberEmails: emails
       });

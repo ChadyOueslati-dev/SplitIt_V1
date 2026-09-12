@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="/js/theme-init.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <title>Manage account — SplitIt</title>
+  </head>
+  <body>
+    <div id="app-header"></div>
+
+    <main class="wrap" style="max-width: 560px">
+      <p class="eyebrow">Account</p>
+      <h1 style="font-size: 2rem">Manage your account</h1>
+
+      <div id="message"></div>
+
+      <section>
+        <div class="section-head" style="margin-top: 0">
+          <h2>Photo</h2>
+        </div>
+        <div class="card avatar-row" style="gap: 1rem">
+          <span id="avatar-preview"></span>
+          <div>
+            <div class="avatar-row">
+              <label class="btn ghost" for="avatar-file" style="margin: 0">Upload a photo</label>
+              <button class="quiet" id="avatar-remove" type="button" hidden>Remove</button>
+            </div>
+            <input id="avatar-file" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+            <p class="small muted" style="margin: 0.4rem 0 0">
+              Square photos work best. It's resized in your browser before upload.
+            </p>
+          </div>
+        </div>
+        <div id="avatar-message" style="margin-top: 0.5rem"></div>
+      </section>
+
+      <div class="card" id="guest-notice" hidden>
+        <p class="small muted" style="margin: 0">
+          You joined as a guest, so this account has no email or password yet — it only exists in
+          the groups you were let into. Add an email and password below to turn it into a full
+          account without losing any of that history.
+        </p>
+      </div>
+
+      <section>
+        <div class="section-head" style="margin-top: 1.5rem">
+          <h2>Profile</h2>
+        </div>
+        <form class="card" id="profile-form">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required minlength="2" />
+          </div>
+          <div class="field">
+            <label for="currency">Default currency</label>
+            <select id="currency" name="currency">
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+          <button type="submit">Save profile</button>
+        </form>
+        <div id="profile-message" style="margin-top: 0.5rem"></div>
+      </section>
+
+      <section id="upgrade-section" hidden>
+        <div class="section-head">
+          <h2>Add email and password</h2>
+        </div>
+        <form class="card" id="upgrade-form">
+          <div class="field">
+            <label for="upgrade-email">Email</label>
+            <input id="upgrade-email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="upgrade-password">Password</label>
+            <input
+              id="upgrade-password"
+              name="password"
+              type="password"
+              required
+              minlength="8"
+              autocomplete="new-password"
+            />
+          </div>
+          <button type="submit">Create full account</button>
+        </form>
+        <div id="upgrade-message" style="margin-top: 0.5rem"></div>
+      </section>
+
+      <section id="password-section" hidden>
+        <div class="section-head">
+          <h2>Change password</h2>
+        </div>
+        <form class="card" id="password-form">
+          <div class="field">
+            <label for="current-password">Current password</label>
+            <input
+              id="current-password"
+              name="currentPassword"
+              type="password"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+          <div class="field">
+            <label for="new-password">New password</label>
+            <input
+              id="new-password"
+              name="newPassword"
+              type="password"
+              required
+              minlength="8"
+              autocomplete="new-password"
+            />
+          </div>
+          <button type="submit">Update password</button>
+        </form>
+        <div id="password-message" style="margin-top: 0.5rem"></div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Delete account</h2>
+        </div>
+        <div class="card">
+          <p class="small muted">
+            This removes your account. Groups where you're the only member are deleted entirely;
+            groups you share with others keep going without you. If you have expense or payment
+            history other members rely on, your account is kept as an anonymous placeholder so
+            their balances stay correct — otherwise it's removed outright.
+          </p>
+          <form id="delete-form">
+            <div class="field" id="delete-password-field">
+              <label for="delete-password">Current password</label>
+              <input id="delete-password" name="password" type="password" autocomplete="current-password" />
+            </div>
+            <button type="submit" style="border-color: var(--debit); color: var(--debit)" class="quiet">
+              Delete my account
+            </button>
+          </form>
+          <div id="delete-message" style="margin-top: 0.5rem"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/account.js"></script>
+  </body>
+</html>
