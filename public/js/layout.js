@@ -14,6 +14,7 @@
           <a href="/settle.html">Settle up</a>
           <a href="/activity.html">Activity</a>
           <a href="/account.html">Account</a>
+          <a class="btn" href="/join.html">Join a group</a>
           <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
           <div class="notif-wrap">
             <button class="icon-btn" id="notif-bell" type="button" aria-label="Notifications">
